@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.鼠标移入显示提示信息</title>
+    <style>
+        .gua-label {
+            display: inline-block;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #id-div-tip {
+            color: blue;
+            border: 1px red solid;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gua-label">鼠标移入显示提示信息</div>
+    <div id="id-div-tip" class="hide">
+        这是一个提示
+    </div>
+    <script>
+        var log = function () {
+            console.log.apply(console, arguments)
+        }
+
+        var e = function (sel) {
+            return document.querySelector(sel)
+        }
+
+        var d = e('.gua-label')
+        // 'mouseover' 是鼠标移入元素发生的事件
+        d.addEventListener('mouseover', function (event) {
+            log('鼠标移入')
+            var tip = e('#id-div-tip')
+            // 给元素删掉 'hide' class
+            // 这样就会删掉 .hide 的样式， 这样就显示出来了
+            tip.classList.remove('hide')
+        })
+        // 'mouseout' 是鼠标移出元素发生的事件
+        d.addEventListener('mouseout', function (event) {
+            log('鼠标移出')
+            var tip = e('#id-div-tip')
+            // 添加元素的 'hide' class
+            // 这样就会加上 .hide 的样式, 这样就被隐藏了
+            tip.classList.add('hide')
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.点击切换提示信息显示</title>
+    <style>
+        .show {
+            display: block !important;
+        }
+
+        .gua-toggle-block {
+            width: 200px;
+            border: 1px solid lightblue;
+            padding: 5px;
+        }
+        .gua-toggle-button {
+            width: 100%;
+        }
+        .gua-toggle-content {
+            display: none;
+            border: 1px red solid;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    页面中有两个一样的点击展开框
+    分别可以控制自己的点击展开
+    需要注意的点：
+    1, closest 函数来查找祖先元素
+    2, 用元素的 querySelector 函数来查找元素的子元素
+    -->
+    <div class="gua-toggle-block">
+        <div>
+            <button class="gua-toggle-button">点击显示提示信息</button>
+            <div class="gua-toggle-content">
+                这是一个很长长长长长长长长长长长长长长长长长长长长长长长长长长长长长
+                的信息
+            </div>
+        </div>
+    </div>
+    <div class="gua-toggle-block">
+        <div>
+            <div class="">
+                <button class="gua-toggle-button">点击显示提示信息</button>
+            </div>
+        </div>
+        <!-- <input> -->
+        <div class="">
+            <div class="gua-toggle-content">
+                这是一个很短的信息
+            </div>
+        </div>
+    </div>
+    <script>
+        var log = function () {
+            console.log.apply(console, arguments)
+        }
+
+        var e = function (sel) {
+            return document.querySelector(sel)
+        }
+        // es 返回一个数组, 包含所有被选中的元素
+        var es = function (sel) {
+            return document.querySelectorAll(sel)
+        }
+        // bindAll 给所有的元素绑定事件
+        var bindAll = function(elements, eventName, callback) {
+            for (var i = 0; i < elements.length; i++) {
+                var tag = elements[i]
+                tag.addEventListener(eventName, callback)
+            }
+        }
+
+        var bs = es('.gua-toggle-button')
+        bindAll(bs, 'click', function(event){
+            // 取得被点击的按钮, 并且获取属于它的 gua-toggle-content
+            var self = event.target
+            // 用 closest 往父节点去找一个 .gua-toggle-block
+            var block = self.closest('.gua-toggle-block')
+            // 每个元素都有 querySelector 函数
+            // 这样是查找元素的子元素
+            // 实际上 document.querySelector 中的 document 也是一个元素(它包含了所有的 HTML 页面元素)
+            var content = block.querySelector('.gua-toggle-content')
+            content.classList.toggle('show')
+        })
+    </script>
+</body>
+</html>

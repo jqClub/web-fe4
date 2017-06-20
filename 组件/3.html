@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.鼠标移入的自动展开菜单</title>
+    <style>
+        .gua-label {
+            display: inline-block;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .gua-box {
+            /* block 元素居中套路 */
+            width: 300px;
+            margin: 0 auto;
+            border: red 1px solid;
+        }
+        .gua-content {
+            display: none;
+            color: pink;
+            width: 100px;
+        }
+
+        .gua-item {
+            border: 1px solid lightblue;
+        }
+
+        .highlight {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="gua-box">
+        <div class="gua-title">
+            鼠标移入展开菜单
+        </div>
+        <div class="gua-content">
+            <div class='gua-item'>
+                服装
+            </div>
+            <div class='gua-item'>
+                数码
+            </div>
+            <div class='gua-item'>
+                办公
+            </div>
+        </div>
+    </div>
+    <script>
+        var log = function () {
+            console.log.apply(console, arguments)
+        }
+
+        var e = function (sel) {
+            return document.querySelector(sel)
+        }
+        // es 返回一个数组, 包含所有被选中的元素
+        var es = function (sel) {
+            return document.querySelectorAll(sel)
+        }
+        // bindAll 给所有的元素绑定事件
+        var bindAll = function(elements, eventName, callback) {
+            for (var i = 0; i < elements.length; i++) {
+                var tag = elements[i]
+                tag.addEventListener(eventName, callback)
+            }
+        }
+
+        var box = e('.gua-box')
+        // 'mouseover' 是鼠标移入元素发生的事件
+        box.addEventListener('mouseover', function (event) {
+            log('鼠标移入')
+            var content = e('.gua-content')
+            content.classList.add('show')
+        })
+        // 'mouseout' 是鼠标移出元素发生的事件
+        box.addEventListener('mouseout', function (event) {
+            log('鼠标移出')
+            var content = e('.gua-content')
+            content.classList.remove('show')
+        })
+
+        // 给所有 .gua-item 添加事件来高亮
+        var items = es('.gua-item')
+        var highlightClass = 'highlight'
+        bindAll(items, 'mouseover', function(event) {
+            log(typeof event)
+            var self = event.target
+            self.classList.add(highlightClass)
+        })
+        // 鼠标移出的时候, 取消高亮效果
+        bindAll(items, 'mouseout', function(event) {
+            var self = event.target
+            self.classList.remove(highlightClass)
+        })
+    </script>
+</body>
+</html>

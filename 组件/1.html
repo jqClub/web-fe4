@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>鼠标移入改变背景色</title>
+        <style>
+            .gua-main {
+                width: 300px;
+                height: 300px;
+                text-align: center;
+                margin: 0 auto;
+                border: 1px red solid;
+                /*
+                第3个参数是延迟时间
+                height在2秒之后，再开始变化，也就是延迟（delay）2秒
+                */
+                transition: background 1s, width 1s 1s, height 1s 2s;
+            }
+
+            .red {
+                background: red;
+                color: white;
+                width: 200px;
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="gua-main">
+            鼠标移入改变背景色
+        </div>
+        <script>
+            var log = function() {
+                console.log.apply(console, arguments)
+            }
+
+            var e = function(sel) {
+                return document.querySelector(sel)
+            }
+
+            var d = e('.gua-main')
+            // 'mouseover' 是鼠标移入元素发生的事件
+            d.addEventListener('mouseover', function(event){
+                log('鼠标移入')
+                // 给元素添加 'red' class
+                // 这样就会拥有 .red 的样式
+                d.classList.add('red')
+            })
+            // 'mouseout' 是鼠标移出元素发生的事件
+            d.addEventListener('mouseout', function(event){
+                log('鼠标移出')
+                // 删掉元素的 'red' class
+                // 这样就会删除 .red 的样式
+                d.classList.remove('red')
+            })
+        </script>
+    </body>
+</html>
